@@ -16,3 +16,8 @@ build
 
 # Celerybeat scheduler file:
 celerybeat-schedule
+
+*.log
+*.pot
+*.pyc
+local_settings.py
