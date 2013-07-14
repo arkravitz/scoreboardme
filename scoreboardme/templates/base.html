@@ -19,16 +19,19 @@
             <a href="{% url 'index' %}" class="main-logo">ScoreBoardMe</a>
             <a href="#" class="logout-button">logout</a>
         </nav>
-        {% block content %}
-            
-        {% endblock content %}
-        <footer class="footer">
+        <div class="content">
+            {% block content %}
+                
+            {% endblock content %}
+        </div>
+        <div class="clear-footer"></div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
             <span class="footer-left">&copy;ScoreBoardMe</span>
             <span class="footer-right">About | Jobs | News</span>
-        </footer>
-
-    </div>
-    <div class="footer-background"></div>
+        </div>
+    </footer>
 
 </body>
     <script src="//code.jquery.com/jquery-latest.js"></script>

@@ -4,7 +4,7 @@ $main-color: #37AB58;
 .container {
     width: 80%;
     min-height:100%;
-    margin: auto;
+    margin: 0 auto 0 auto;
     position: relative;
 }
 
@@ -57,26 +57,36 @@ nav.main-nav {
 
 .footer {
     position: relative;
-    margin: 15px auto 0 auto;
+    margin: -25px auto 0 auto;
     z-index: 1;
     background-color: $nav-color;
     color: white;
     width: 100%;
-    .footer-right {
-        float: left;
-    }
-    .footer-left {
-        float: right;
-    }
-}
-
-.footer-background {
-    position: relative;
-    margin: 0 auto 0 auto;
     height: 25px;
-    background-color: black;
+    .footer-content {
+        width: 80%;
+        margin: auto;
+        .footer-right {
+            float: left;
+        }
+        .footer-left {
+            float: right;
+        }
+    }
 }
 
+
+.scoreboard {
+    width: 90%;
+    height: 70px;
+    margin: auto;
+    border: 5px solid white;
+}
+
+.clear-footer {
+    clear: both;
+    height: 30px;
+}
 
 html, body {
     margin: 0;
