@@ -22,3 +22,4 @@ celerybeat-schedule
 *.pyc
 local_settings.py
 *.scss
+*.rb
