@@ -21,3 +21,4 @@ celerybeat-schedule
 *.pot
 *.pyc
 local_settings.py
+.sass-cache
