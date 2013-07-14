@@ -7,10 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% compress css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/project.scss" type="text/x-scss">
+    {% endcompress %}
+
     {% block extra_css %}
         
     {% endblock extra_css %}
-    {% endcompress %}
 </head>
 <body>
     <div class="nav-background"></div>
@@ -41,8 +42,9 @@
 
     {% compress js %}
         <script src="{{ STATIC_URL }}js/project.js"></script>
+    {% endcompress %}
+
         {% block extra_js %}
             
         {% endblock extra_js %}
-    {% endcompress %}
 </html>
