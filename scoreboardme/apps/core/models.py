@@ -22,10 +22,13 @@ class Score(models.Model):
         return u"%s %s score: %d" % (self.event.title, self.participant.user.username, self.score)
 
 
+default_currency = 1000
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
     events = models.ManyToManyField(Event, related_name='events')
-    currency = models.IntegerField()
+    currency = models.IntegerField(default=default_currency)
 
     def __unicode__(self):
         self.user.username
