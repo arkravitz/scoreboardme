@@ -27,7 +27,7 @@ default_currency = 1000
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    events = models.ManyToManyField(Event, related_name='events')
+    events = models.ManyToManyField(Event, related_name='events', blank=True)
     currency = models.IntegerField(default=default_currency)
 
     def __unicode__(self):

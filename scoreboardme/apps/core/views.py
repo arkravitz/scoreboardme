@@ -1,10 +1,16 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, FormView
 
+from .forms import RegistrationForm
 
 class IndexView(TemplateView):
     template_name = "core/index.html"
 
-"""
-class UserView(TemplateView):
-    template_name = "core/user.html"
-"""
+
+class RegistrationView(FormView):
+    template_name = "registration/register.html"
+    success_url = "/profile"
+    form_class = RegistrationForm
+
+    def form_valid(self, form):
+        form.save()
+        return super(RegistrationView, self).form_valid(form)
