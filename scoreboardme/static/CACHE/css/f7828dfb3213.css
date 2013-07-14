@@ -1,0 +1,11 @@
+nav.main-nav {
+  height: 50px;
+  background-color: dimgrey; }
+  nav.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 30px; }
+
+html, body {
+  margin: 0;
+  padding: 0; }

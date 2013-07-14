@@ -1,0 +1,25 @@
+.container {
+  width: 80%;
+  margin: auto; }
+
+nav.main-nav {
+  height: 50px; }
+  nav.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 30px; }
+    nav.main-nav a.home-logo {
+      float: left;
+      margin-left: 15px; }
+    nav.main-nav a.logout-button {
+      float: right;
+      margin-right: 15px; }
+
+html, body {
+  margin: 0;
+  padding: 0; }
+
+nav-background {
+  color: dimgrey;
+  height: 50px;
+  width: 100%; }

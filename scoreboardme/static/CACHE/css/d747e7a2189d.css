@@ -1,0 +1,71 @@
+.container {
+  width: 80%;
+  min-height: 100%;
+  margin: auto;
+  position: relative; }
+
+nav.main-nav {
+  height: 50px;
+  background-color: black;
+  position: relative;
+  margin-bottom: 20px; }
+  nav.main-nav a {
+    color: #ddf4e4;
+    text-decoration: none; }
+    nav.main-nav a:hover {
+      color: white; }
+    nav.main-nav a.main-logo {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: 35px; }
+    nav.main-nav a.logout-button {
+      position: absolute;
+      right: 0;
+      bottom: 5px;
+      font-size: 25px; }
+
+.nav-background {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  background-color: black;
+  z-index: 0;
+  overflow: visible; }
+
+/* Footer */
+.footer {
+  position: absolute;
+  width: 100%;
+  margin-top: 10px;
+  z-index: 1;
+  background-color: black;
+  bottom: -20px;
+  color: white;
+  width: 100%; }
+  .footer .footer-right {
+    position: absolute;
+    right: 0; }
+  .footer .footer-left {
+    left: 0; }
+
+.footer-background {
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  background-color: black;
+  z-index: 15;
+  left: 0;
+  bottom: -20px; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font: 12px Arial, Helvetica, sans-serif;
+  background-color: #37ab58;
+  z-index: -1; }
+
+.claer {
+  clear: both; }

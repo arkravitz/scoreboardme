@@ -13,15 +13,23 @@
     {% endcompress %}
 </head>
 <body>
+    <div class="nav-background"></div>
     <div class="container">
-        <header class="header">
-            <a href="{% url 'index' %}" class="homelogo">ScoreBoardMe</a>
+        <nav class="main-nav">
+            <a href="{% url 'index' %}" class="main-logo">ScoreBoardMe</a>
             <a href="#" class="logout-button">logout</a>
-        </header>
+        </nav>
         {% block content %}
             
         {% endblock content %}
+        <footer class="footer">
+            <span class="footer-left">&copy;ScoreBoardMe</span>
+            <span class="footer-right">About | Jobs | News</span>
+        </footer>
+
     </div>
+    <div class="footer-background"></div>
+
 </body>
     <script src="//code.jquery.com/jquery-latest.js"></script>
 
