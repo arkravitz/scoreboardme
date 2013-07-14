@@ -199,6 +199,7 @@ THIRD_PARTY_APPS = (
 )
 
 LOCAL_APPS = (
+    'scoreboardme.apps.core',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -266,4 +267,9 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_JS_FILTERS = [
     'compressor.filters.template.TemplateFilter',
 ]
+
+COMPRESS_PRECOMPILERS = (
+    ('text/x-sass', 'sass {infile} {outfile}'),
+    ('text/x-scss', 'sass --scss {infile} {outfile}'),
+)
 ########## END COMPRESSION CONFIGURATION
