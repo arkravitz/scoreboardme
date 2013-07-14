@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="user-top">
+        <div class="user-info">
+            <h2 class="name"></h2>
+            <h4 class="total-currency"></h4>
+
+        </div>
+        <div class="creat-event">
+            <button class="add-event">Add Event</button>
+        </div>
+    </div>
+    <div class="current-events">
+        {% for event in user.profile.events%}{#filter for completed == False#}
+
+        {% endfor %}
+
+    </div>
+    <div class="completed-events">
+        {% for event in user.profile.events %}{#filter for completed == True#}
+
+        {% endfor %}
+
+    </div>
+{% endblock content %}
