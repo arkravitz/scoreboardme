@@ -21,3 +21,5 @@ celerybeat-schedule
 *.pot
 *.pyc
 local_settings.py
+coffee
+sass
