@@ -30,5 +30,11 @@ class UserProfile(models.Model):
     events = models.ManyToManyField(Event, related_name='events', blank=True)
     currency = models.IntegerField(default=default_currency)
 
+    def get_active_events(self):
+        return self.events.filter(ended=False)
+
+    def get_completed_events(self):
+        return self.events.filter(ended=True)
+
     def __unicode__(self):
-        self.user.username
+        return self.user.username

@@ -52,10 +52,6 @@ CELERY_ALWAYS_EAGER = True
 ########## END CELERY CONFIGURATION
 
 
-########## COMPRESS CONFIG
-COMPRESS_OFFLINE = True
-########## END COMPRESS CONFIG
-
 ########## TOOLBAR CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (

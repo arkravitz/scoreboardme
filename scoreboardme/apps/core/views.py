@@ -1,4 +1,5 @@
 from django.views.generic import DetailView, TemplateView, FormView
+from django.contrib.auth import authenticate
 
 from braces.views import LoginRequiredMixin
 
@@ -15,7 +16,11 @@ class RegistrationView(FormView):
     form_class = RegistrationForm
 
     def form_valid(self, form):
-        form.save()
+        user = form.save()
+        new_user = authenticate(username=user.username,
+                                password=user.password)
+        login(self.request, new_user)
+
         return super(RegistrationView, self).form_valid(form)
 
 

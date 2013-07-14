@@ -23,11 +23,3 @@ class RegistrationForm(UserCreationForm):
             user_profile = UserProfile(user=user)
             user_profile.save()
         return user
-
-class LoginForm(forms.Form):
-    """
-    Base class for authenticating users. Extend this to get a form that accepts
-    username/password logins.
-    """
-    username = forms.CharField(label=_("username"), max_length=30)
-    password = forms.CharField(label=_("password"), widget=forms.PasswordInput)
