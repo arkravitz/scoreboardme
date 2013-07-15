@@ -1,0 +1,84 @@
+.left {
+    float: left;
+}
+
+.username {
+    font-size: 50px;
+    margin-bottom: 20px
+}
+
+.right {
+    float: right;
+}
+
+.sidebar {
+    width: 18%;
+    position: fixed;
+    right: 50px;
+    top: 120px;
+    height: 60%;
+    text-align: center;
+}
+
+mainbar {
+    height: 100%;
+}
+
+.left {
+    width: 80%;
+}
+
+$currency-color: #efc786;
+
+.currency {
+    padding: 15px;
+    background-color: $currency-color;
+    color: black;
+    border-radius: 5px;
+}
+
+.event-header {
+    text-align: center;
+    font-size: 40px;
+}
+
+.event-requests {
+    background-color: #333;
+    padding: 10px;
+    text-align: center;
+    margin-top: 30px;
+    height: 100%;
+    ul {
+        padding: 0;
+    }
+    ul li {
+        list-style-type: none;
+        margin: 0;
+    }
+}
+
+.event-request-li {
+    padding: 10px;
+    background-color: #333 + 50;
+    &:not(:last-child) {
+        border-bottom: 2px solid white;
+    }
+}
+
+$event-container-height: 500px;
+
+.event-content-container {
+    background-color: #777;
+    height: $event-container-height;
+    position: relative;
+}
+
+.content {
+    height: 100%;
+}
+
+.event-list {
+    border: 2px solid white;
+    margin: 10px;
+    height: $event-container-height - 100px;
+}
