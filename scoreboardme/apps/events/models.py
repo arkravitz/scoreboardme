@@ -9,4 +9,4 @@ class EventRequest(models.Model):
     optional_message = models.CharField(max_length=200, blank=True)
 
     def __unicode__(self):
-        return self.event.title
+        return self.event_request.title

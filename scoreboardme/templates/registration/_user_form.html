@@ -5,8 +5,8 @@
         <span class="form-errors error">
             {{ field.errors }}
         </span>
-        {{ field.label_tag }}
-        {{ field }}
+        <span class="label">{{ field.label_tag }}</span>
+        <span class="input">{{ field }}</span>
     </div> 
     {% endfor %}
     <input type="submit" class="btn submit-btn" value="{{ submit_label }}">

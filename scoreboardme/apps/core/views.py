@@ -1,9 +1,10 @@
 from django.views.generic import DetailView, TemplateView, FormView
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 from braces.views import LoginRequiredMixin
 
 from .forms import RegistrationForm
+from .models import UserProfile
 
 
 class IndexView(TemplateView):
@@ -16,12 +17,10 @@ class RegistrationView(FormView):
     form_class = RegistrationForm
 
     def form_valid(self, form):
-        user = form.save(commit=False)
-        user.profile = UserProfile(user=user)
-        user.profile.save()
-        user.save()
+        user = form.save()
+        UserProfile.objects.create(user=user)
         new_user = authenticate(username=user.username,
-                                password=user.password)
+                                password=self.request.POST.get('password1', ''))
         login(self.request, new_user)
 
         return super(RegistrationView, self).form_valid(form)
@@ -34,4 +33,3 @@ class ProfileView(LoginRequiredMixin, DetailView):
 
     def get_object(self):
         return self.request.user.profile
-
