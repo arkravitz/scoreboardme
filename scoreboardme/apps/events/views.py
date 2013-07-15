@@ -41,3 +41,26 @@ class CreateEventView(LoginRequiredMixin, FormView):
         # Add in a QuerySet of all the books
         context['profiles'] = UserProfile.objects.all()
         return context
+
+class EventView(LoginRequiredMixin, DetailView):
+    template_name = "events/view_event.html"
+
+
+    def render_to_response(self, context, **response_kwargs):
+        current_profile = self.request.user.profile
+        creator = self.event.creator
+        public = self.event.public
+        profiles = self.event.profiles
+
+        if not current_profile == creator \
+            and not public \
+                and not current_profile in profiles:
+                    return redirect("/profile/")
+
+            response_kwargs.setdefault('content_type', self.content_type)
+            return self.response_class(
+                request=self.request,
+                template=self.get_template_names(),
+                context=context,
+                **response_kwargs
+            )
