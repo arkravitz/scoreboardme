@@ -46,17 +46,16 @@ CACHES = {
 ########## END CACHE CONFIGURATION
 
 
-########## CELERY CONFIGURATION
-# See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
-CELERY_ALWAYS_EAGER = True
-########## END CELERY CONFIGURATION
+# ########## CELERY CONFIGURATION
+# # See: http://docs.celeryq.org/en/latest/configuration.html#celery-always-eager
+# CELERY_ALWAYS_EAGER = True
+# ########## END CELERY CONFIGURATION
 
 
 ########## TOOLBAR CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
 INSTALLED_APPS += (
     'debug_toolbar',
-    'django_extensions',
 )
 
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
