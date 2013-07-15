@@ -1,16 +1,15 @@
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from django.contrib.auth import authenticate
 
 from braces.views import LoginRequiredMixin
 
 from .forms import CreateEventForm
 from .models import EventRequest
-from ..core.models import UserProfile
+from ..core.models import UserProfile, Event, Score
 
 
 class CreateEventView(LoginRequiredMixin, FormView):
     template_name = "events/create_event.html"
-    success_url = "/event/%(id)s/"
     form_class = CreateEventForm
     login_url = "/login/"
 
@@ -32,7 +31,10 @@ class CreateEventView(LoginRequiredMixin, FormView):
         users_requested = self.get_selected_users()
         for user in users_requested:
             EventRequest.objects.create(
-                event=event, request_to=user, optional_message='')
+                event_request=event, request_to=user, optional_message='')
+
+        self.success_url = "/events/%d/" % event.id
+
         return super(CreateEventView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -41,3 +43,30 @@ class CreateEventView(LoginRequiredMixin, FormView):
         # Add in a QuerySet of all the books
         context['profiles'] = UserProfile.objects.all()
         return context
+
+class EventView(LoginRequiredMixin, DetailView):
+    model = Event
+    template_name = "events/event.html"
+    context_object_name = 'current_event'
+    
+    def get_context_data(self, **kwargs):
+        self.object = self.get_object()
+
+        context = super(EventView, self).get_context_data(**kwargs)
+        context['sorted_scores'] = self.object.scores.order_by('score')
+        return context
+    
+    def render_to_response(self, context, **response_kwargs):
+        current_profile = self.request.user.profile
+        self.object = self.get_object()
+        creator = self.object.creator
+        public = self.object.public
+        profiles = self.object.profiles
+
+        if not current_profile == creator \
+            and not public \
+                and not current_profile in profiles:
+                    return redirect("/profile/")
+
+        return super(EventView, self).render_to_response(context, **response_kwargs)
+        
