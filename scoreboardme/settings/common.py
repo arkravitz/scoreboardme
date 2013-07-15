@@ -120,6 +120,10 @@ FIXTURE_DIRS = (
 )
 ########## END FIXTURE CONFIGURATION
 
+########## LOGIN CONFIG
+LOGIN_URL = '/login/'
+########## END LOGIN CONFIG
+
 
 ########## TEMPLATE CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
