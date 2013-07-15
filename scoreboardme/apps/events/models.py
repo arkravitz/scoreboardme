@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from ..core.models import UserProfile, Event
+from scoreboardme.apps.core.models import UserProfile, Event
 
 class EventRequest(models.Model):
-    event = models.ForeignKey(Event, related_name='eventrequests')
-    request_to = models.ForeignKey(UserProfile, related_name='eventrequests_to')
+    event = models.ForeignKey(Event)
+    request_to = models.ForeignKey(UserProfile)
     optional_message = models.CharField(max_length=200, blank=True)
 
     def __unicode__(self):
