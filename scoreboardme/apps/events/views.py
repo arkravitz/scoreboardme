@@ -44,6 +44,7 @@ class CreateEventView(LoginRequiredMixin, FormView):
 
 class EventView(LoginRequiredMixin, DetailView):
     template_name = "events/view_event.html"
+    context_object_name = current_event
 
 
     def render_to_response(self, context, **response_kwargs):
