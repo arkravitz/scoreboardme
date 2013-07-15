@@ -1,31 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="top-container">
-        <div class="left">
-            <div class="user-name">{{ profile.user.username }}</div>
-            <div class="currency">Currency: <span>{{ profile.currency }}</span></div>
+        <div class="left mainbar">
+            <div class="top-left">
+                <div class="username left">{{ profile.user.username }}
+                </div>
+                <div class="currency right">Currency: <span>{{ profile.currency }}</span></div>
+            </div>
+            <div class="clear"></div>
+            <div class="event-content-container">
+                <h4 class="content-header event-header">events</h4>
+                <ul class="event-list list">
+                    {% for event in profile.events.all %}
+                    <li class="event-li li">{{ event.title }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-        <div class="right">
+        <div class="clear"></div>
+        <div class="right sidebar">
             <a href="{% url 'create_event' %}" class="add-event btn">add event</a>
+            <div class="clear"></div>
+            <div class="event-requests">
+                <h4 class="content-header event-requests-header">event requests</h4>
+                <ul class="event-requests-list list">
+                    {% for event in profile.event_requests.all %}
+                        <li class="event-request-li li">{{ event.title }} - {{ event.creator }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="bottom-container">
-        <div class="left active-events">
-            <h4 class="content-header active-event-header">current active events</h4>
-            <ul class="event-list list">
-                {% for event in profile.get_active_events %}
-                <li class="event-li li">{{ event.title }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="left completed-events">
-            <h4 class="content-header completed-event-header">completed events</h4>
-            <ul class="event-list list">
-                {% for event in profile.get_completed_events %}
-                <li class="event-li li">{{ event.title }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+        <div class="clear"></div>
+    <div class="clear"></div>
 {% endblock content %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/profile.css" type="text/css">
+
+{% endblock extra_css %}
