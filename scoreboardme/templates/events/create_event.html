@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="" class="login-form form" method="post">{% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="invite-participants">
+        <ul class='available-list'>
+            {% for profile in profiles %}
+                <li><input type="checkbox" name="request_to" value="{{ profile.id }}"> {{ profile.user.username }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="event-form">
+        <div class="event-title">
+            <label for="id_title">title:</label>
+            {{ form.title }}
+        </div>
+        <div class="event-description">
+            <label for="id_description">description:</label>
+            {{ form.description }}
+        </div>
+        <div class="event-bet-amount">
+            <label for="id_bet_amount">bet amount:</label>
+            {{ form.bet_amount }}
+        </div>
+        <div class="event-public">
+            <label for="id_public">public?</label>
+            {{ form.public }}
+        </div>
+    </div>
+    <input type="submit" class="btn submit-btn" value="create">
+</form>
+{% endblock content %}

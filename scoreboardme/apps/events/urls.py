@@ -1,10 +1,8 @@
 from django.conf.urls import patterns, include, url
 
-from class_based_auth_views.views import LoginView, LogoutView
-
 from . import views
 from . import forms
 
 urlpatterns = patterns('',
-    url(),
+    url(r'^create_event/$', views.CreateEventView.as_view(), name='create_event'),
 )

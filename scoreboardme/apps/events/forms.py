@@ -10,4 +10,4 @@ class CreateEventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ("title", "description", "public",)
+        fields = ("title", "description", "public", "bet_amount")
