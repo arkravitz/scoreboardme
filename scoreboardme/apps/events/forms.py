@@ -10,17 +10,4 @@ class CreateEventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ("title", "public", "description")
-
-    def save(self, commit=True):
-        event = super(CreateEventForm, self).save(commit=False)
-        """
-        event.title = self.cleaned_data['title']
-        event.public = self.cleaned_data['public']
-        event.description = self.cleaned_data['description']
-        """
-        if commit:
-            .save()
-            user_profile = UserProfile(user=user)
-            user_profile.save()
-        return event
+        fields = ("title", "description", "public",)

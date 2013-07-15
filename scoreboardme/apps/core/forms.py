@@ -5,14 +5,16 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import UserProfile
 
+
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(label = "email")
+    email = forms.EmailField(label="email")
     first_name = forms.CharField(label="first name")
     last_name = forms.CharField(label="last name")
-  
+
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "username", "email", "password1", "password2",)
+        fields = ("first_name", "last_name",
+                  "username", "email", "password1", "password2",)
 
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)

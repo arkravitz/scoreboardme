@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class Event(models.Model):
     creator = models.ForeignKey('UserProfile')
     description = models.TextField()
     ended = models.BooleanField(default=False)
     title = models.CharField(max_length=70)
     public = models.BooleanField(default=True)
+    bet_amount = models.IntegerField()
 
     def __unicode__(self):
         return u"%s %s" % (self.title, self.creator.user.username)
@@ -27,7 +27,7 @@ default_currency = 1000
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    events = models.ManyToManyField(Event, related_name='events', blank=True)
+    events = models.ManyToManyField(Event, related_name='profiles', blank=True)
     currency = models.IntegerField(default=default_currency)
 
     def get_active_events(self):
@@ -38,3 +38,4 @@ class UserProfile(models.Model):
 
     def __unicode__(self):
         return self.user.username
+
