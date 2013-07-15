@@ -1,9 +1,10 @@
 from django.views.generic import DetailView, TemplateView, FormView
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 from braces.views import LoginRequiredMixin
 
 from .forms import RegistrationForm
+from .models import UserProfile
 
 
 class IndexView(TemplateView):
@@ -34,4 +35,3 @@ class ProfileView(LoginRequiredMixin, DetailView):
 
     def get_object(self):
         return self.request.user.profile
-

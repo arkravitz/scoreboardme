@@ -1,11 +1,11 @@
-from django.views.generic import FormView
+from django.views.generic import FormView, DetailView
 from django.contrib.auth import authenticate
 
 from braces.views import LoginRequiredMixin
 
 from .forms import CreateEventForm
 from .models import EventRequest
-from ..core.models import UserProfile
+from ..core.models import UserProfile, Event, Score
 
 
 class CreateEventView(LoginRequiredMixin, FormView):
@@ -43,25 +43,32 @@ class CreateEventView(LoginRequiredMixin, FormView):
         return context
 
 class EventView(LoginRequiredMixin, DetailView):
-    template_name = "events/view_event.html"
-    context_object_name = current_event
+    model = Event
+    template_name = "events/event.html"
+    context_object_name = 'current_event'
 
+    def get_context_data(self, **kwargs):
+        self.object = self.get_object()
+
+        context = super(EventView, self).get_context_data(**kwargs)
+        context['sorted_scores'] = self.object.scores.order_by('score')
 
     def render_to_response(self, context, **response_kwargs):
         current_profile = self.request.user.profile
-        creator = self.event.creator
-        public = self.event.public
-        profiles = self.event.profiles
+        self.object = self.get_object()
+        creator = self.object.creator
+        public = self.object.public
+        profiles = self.object.profiles
 
         if not current_profile == creator \
             and not public \
                 and not current_profile in profiles:
                     return redirect("/profile/")
 
-            response_kwargs.setdefault('content_type', self.content_type)
-            return self.response_class(
-                request=self.request,
-                template=self.get_template_names(),
-                context=context,
-                **response_kwargs
-            )
+        response_kwargs.setdefault('content_type', self.content_type)
+        return self.response_class(
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
+            **response_kwargs
+        )
