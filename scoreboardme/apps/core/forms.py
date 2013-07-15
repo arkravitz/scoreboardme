@@ -9,6 +9,7 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(label = "email")
     first_name = forms.CharField(label="first name")
     last_name = forms.CharField(label="last name")
+  
     class Meta:
         model = User
         fields = ("first_name", "last_name", "username", "email", "password1", "password2",)
@@ -20,6 +21,4 @@ class RegistrationForm(UserCreationForm):
         user.email = self.cleaned_data["email"]
         if commit:
             user.save()
-            user_profile = UserProfile(user=user)
-            user_profile.save()
         return user

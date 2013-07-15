@@ -200,6 +200,7 @@ THIRD_PARTY_APPS = (
 
 LOCAL_APPS = (
     'scoreboardme.apps.core',
+    'scoreboardme.apps.events',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

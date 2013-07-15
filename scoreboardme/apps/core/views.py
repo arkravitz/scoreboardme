@@ -16,7 +16,10 @@ class RegistrationView(FormView):
     form_class = RegistrationForm
 
     def form_valid(self, form):
-        user = form.save()
+        user = form.save(commit=False)
+        user.profile = UserProfile(user=user)
+        user.profile.save()
+        user.save()
         new_user = authenticate(username=user.username,
                                 password=user.password)
         login(self.request, new_user)
@@ -31,3 +34,4 @@ class ProfileView(LoginRequiredMixin, DetailView):
 
     def get_object(self):
         return self.request.user.profile
+
