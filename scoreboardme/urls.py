@@ -13,5 +13,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^', include('scoreboardme.apps.core.urls')),
-    url(r'^events/', include('scoreboardme.apps.events.urls'))
+    url(r'^events/', include('scoreboardme.apps.events.urls')),
 )

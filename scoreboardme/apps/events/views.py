@@ -10,7 +10,6 @@ from ..core.models import UserProfile, Event, Score
 
 class CreateEventView(LoginRequiredMixin, FormView):
     template_name = "events/create_event.html"
-    success_url = "/event/%(id)s/"
     form_class = CreateEventForm
     login_url = "/login/"
 
@@ -32,7 +31,10 @@ class CreateEventView(LoginRequiredMixin, FormView):
         users_requested = self.get_selected_users()
         for user in users_requested:
             EventRequest.objects.create(
-                event=event, request_to=user, optional_message='')
+                event_request=event, request_to=user, optional_message='')
+
+        self.success_url = "/events/%d/" % event.id
+
         return super(CreateEventView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -46,13 +48,14 @@ class EventView(LoginRequiredMixin, DetailView):
     model = Event
     template_name = "events/event.html"
     context_object_name = 'current_event'
-
+    
     def get_context_data(self, **kwargs):
         self.object = self.get_object()
 
         context = super(EventView, self).get_context_data(**kwargs)
         context['sorted_scores'] = self.object.scores.order_by('score')
-
+        return context
+    
     def render_to_response(self, context, **response_kwargs):
         current_profile = self.request.user.profile
         self.object = self.get_object()
@@ -65,10 +68,5 @@ class EventView(LoginRequiredMixin, DetailView):
                 and not current_profile in profiles:
                     return redirect("/profile/")
 
-        response_kwargs.setdefault('content_type', self.content_type)
-        return self.response_class(
-            request=self.request,
-            template=self.get_template_names(),
-            context=context,
-            **response_kwargs
-        )
+        return super(EventView, self).render_to_response(context, **response_kwargs)
+        
