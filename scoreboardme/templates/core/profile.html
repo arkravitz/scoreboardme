@@ -34,7 +34,9 @@
     <div class="clear"></div>
 {% endblock content %}
 
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/profile.css" type="text/css">
 
+{% block extra_css %}
+    {% compress css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/profile.css" type="text/css">
+    {% endcompress %}
 {% endblock extra_css %}
