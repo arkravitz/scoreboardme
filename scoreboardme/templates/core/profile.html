@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load compress %}
 
 {% block content %}
         <div class="left mainbar">
@@ -37,7 +36,6 @@
 
 
 {% block extra_css %}
-    {% compress css %}
+    {{ block.super }}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/profile.css" type="text/css">
-    {% endcompress %}
 {% endblock extra_css %}
