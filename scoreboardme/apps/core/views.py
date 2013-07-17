@@ -9,11 +9,21 @@ from .forms import RegistrationForm
 from .models import UserProfile
 
 
+class RedirectAuthenticatedMixin(object):
+    redirect_url = '/profile'
+
+    def render_to_response(self, context):
+        if self.request.user.is_authenticated():
+            return redirect(self.redirect_url)
+
+        return super(RedirectAuthenticated, self).render_to_response(context)
+
+
 class IndexView(TemplateView):
     template_name = "core/index.html"
 
 
-class RegistrationView(FormView):
+class RegistrationView(RedirectAuthenticatedMixin, FormView):
     template_name = "registration/register.html"
     success_url = "/profile"
     form_class = RegistrationForm
@@ -37,9 +47,5 @@ class ProfileView(LoginRequiredMixin, DetailView):
         return self.request.user.profile
 
 
-class RedirectLoginView(LoginView):
-    def render_to_response(self, context):
-        if self.request.user.is_authenticated():
-            return redirect('/profile')
-
-        return super(LoginView, self).render_to_response(context)
+class RedirectLoginView(RedirectAuthenticatedMixin, LoginView):
+    pass
