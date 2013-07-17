@@ -18,3 +18,5 @@ build
 *.pot
 
 static/
+
+.DS_Store
