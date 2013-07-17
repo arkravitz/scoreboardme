@@ -47,6 +47,11 @@ class CreateEventView(LoginRequiredMixin, FormView):
 
 
 class EventView(LoginRequiredMixin, DetailView):
+    '''
+    This is the view for rendering the event view page.
+    It adds sorted scores to the context data, and makes sure
+    the event is viewable by the current user.
+    '''
     model = Event
     template_name = "events/event.html"
     context_object_name = 'event'
@@ -65,6 +70,10 @@ class EventView(LoginRequiredMixin, DetailView):
         public = self.object.public
         profiles = self.object.profiles
 
+        '''
+        This checks for your own event, or if it's public, or if
+        you're included in the event.
+        '''
         if not current_profile == creator \
             and not public \
                 and not current_profile in profiles:
