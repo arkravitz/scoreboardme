@@ -2,8 +2,8 @@ from django.contrib import admin
 
 from django_extensions.admin import ForeignKeyAutocompleteAdmin
 
-from .models import UserProfile, Score, Event
-from ..events.models import EventRequest
+from .models import UserProfile
+from ..events.models import EventRequest, Score, Event
 
 class EventRequestInline(admin.TabularInline):
     model = EventRequest

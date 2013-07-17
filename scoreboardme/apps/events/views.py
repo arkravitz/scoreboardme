@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate
 from braces.views import LoginRequiredMixin
 
 from .forms import CreateEventForm
-from .models import EventRequest
-from ..core.models import UserProfile, Event, Score
+from .models import EventRequest, Event, Score
+from ..core.models import UserProfile
 
 
 class CreateEventView(LoginRequiredMixin, FormView):
@@ -29,6 +29,7 @@ class CreateEventView(LoginRequiredMixin, FormView):
 
         # Add users to event requests that creator picked
         users_requested = self.get_selected_users()
+        print users_requested, '\n\n\n\n\n\n'
         for user in users_requested:
             EventRequest.objects.create(
                 event_request=event, request_to=user, optional_message='')
@@ -44,18 +45,19 @@ class CreateEventView(LoginRequiredMixin, FormView):
         context['profiles'] = UserProfile.objects.all()
         return context
 
+
 class EventView(LoginRequiredMixin, DetailView):
     model = Event
     template_name = "events/event.html"
-    context_object_name = 'current_event'
-    
+    context_object_name = 'event'
+
     def get_context_data(self, **kwargs):
         self.object = self.get_object()
 
         context = super(EventView, self).get_context_data(**kwargs)
-        context['sorted_scores'] = self.object.scores.order_by('score')
+        context['sorted_scores'] = self.object.score_set.order_by('score')
         return context
-    
+
     def render_to_response(self, context, **response_kwargs):
         current_profile = self.request.user.profile
         self.object = self.get_object()
@@ -69,4 +71,3 @@ class EventView(LoginRequiredMixin, DetailView):
                     return redirect("/profile/")
 
         return super(EventView, self).render_to_response(context, **response_kwargs)
-        
