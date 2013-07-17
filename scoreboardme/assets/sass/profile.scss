@@ -1,14 +1,16 @@
+
+/* Generalized classes. */
 .left {
     float: left;
 }
+.right {
+    float: right;
+}
+
 
 .username {
     font-size: 50px;
     margin-bottom: 20px
-}
-
-.right {
-    float: right;
 }
 
 .sidebar {
@@ -20,7 +22,7 @@
     text-align: center;
 }
 
-mainbar {
+.mainbar {
     height: 100%;
 }
 
