@@ -90,8 +90,27 @@ nav.main-nav {
     height: 350px;
     margin: auto;
     border: 5px solid white;
+    background-image: url("{{ STATIC_URL }}img/featured.png");
 }
 
+.description-wrapper {
+    * {
+        text-align: center;
+    }
+    h3 {
+        font-size: 50px;
+    }
+    p {
+        font-size: 40px;
+        a {
+            display: block;
+            margin-top: 30px;
+            width: 200px;
+            margin: 20px auto 0;
+        }
+    }
+
+}
 
 html, body {
     margin: 0;

@@ -13,6 +13,10 @@ class Event(models.Model):
     def __unicode__(self):
         return u"%s %s" % (self.title, self.creator.user.username)
 
+    def get_absolute_url(self):
+        from django.core.urlresolvers import reverse
+        return reverse('event', args=[str(self.id)])
+
 
 class EventRequest(models.Model):
     event_request = models.ForeignKey(Event)

@@ -109,7 +109,7 @@ STATICFILES_FINDERS = (
 
 ########## SECRET CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = r"0qq*=tf0e8acn@f(qonil+dccu+y1aty1b%v%!nff)\+j\^_@(\^7"
+SECRET_KEY = r'0qq*=tf0e8acn@f(qonil+dccu+y1aty1b%v%!nff)\+j\^_@(\^7'
 ########## END SECRET CONFIGURATION
 
 
@@ -122,6 +122,8 @@ FIXTURE_DIRS = (
 
 ########## LOGIN CONFIG
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/profile/'
+
 ########## END LOGIN CONFIG
 
 

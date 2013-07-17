@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
+    {# TODO: Change picture in scoreboard to self drawn photo #}
     <div class="scoreboard"></div>
-    
+    <div class="description-wrapper">
+        <h3 class="description-header">Welcome to scoreboardme!</h3>
+        <p class="description">
+            This is a site for scoreboards! 
+            Challenge your friends, and win virtual currency. 
+            What're you waiting for? 
+            <a href="{% url 'login' %}" class="btn">Get scoring now!</a>
+        </p>
+    </div>
 {% endblock content %}

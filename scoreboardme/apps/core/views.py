@@ -1,7 +1,9 @@
 from django.views.generic import DetailView, TemplateView, FormView
 from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
 
 from braces.views import LoginRequiredMixin
+from class_based_auth_views.views import LoginView
 
 from .forms import RegistrationForm
 from .models import UserProfile
@@ -34,3 +36,10 @@ class ProfileView(LoginRequiredMixin, DetailView):
     def get_object(self):
         return self.request.user.profile
 
+
+class RedirectLoginView(LoginView):
+    def render_to_response(self, context):
+        if self.request.user.is_authenticated():
+            return redirect('/profile')
+
+        return super(LoginView, self).render_to_response(context)

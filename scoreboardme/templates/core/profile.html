@@ -24,11 +24,13 @@
             <div class="clear"></div>
             <div class="event-requests">
                 <h4 class="content-header event-requests-header">event requests</h4>
-                <ul class="event-requests-list list">
-                    {% for event in profile.event_requests.all %}
-                        <li class="event-request-li li">{{ event.title }} - {{ event.creator }}</li>
-                    {% endfor %}
-                </ul>
+                <div class="event-requests-list-container">
+                    <ul class="event-requests-list list">
+                        {% for event in profile.event_requests.all %}
+                            <li class="event-request-li li"><a href="{{ event.get_absolute_url }}">{{ event.title }} - {{ event.creator }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="clear"></div>
