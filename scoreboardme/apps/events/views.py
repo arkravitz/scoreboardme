@@ -2,6 +2,7 @@ from django.views.generic import FormView, DetailView
 from django.contrib.auth import authenticate
 
 from braces.views import LoginRequiredMixin
+from extra_views import InlineFormSetView
 
 from .forms import CreateEventForm
 from .models import EventRequest, Event, Score
@@ -29,7 +30,6 @@ class CreateEventView(LoginRequiredMixin, FormView):
 
         # Add users to event requests that creator picked
         users_requested = self.get_selected_users()
-        print users_requested, '\n\n\n\n\n\n'
         for user in users_requested:
             EventRequest.objects.create(
                 event_request=event, request_to=user, optional_message='')
@@ -60,7 +60,7 @@ class EventView(LoginRequiredMixin, DetailView):
         self.object = self.get_object()
 
         context = super(EventView, self).get_context_data(**kwargs)
-        context['sorted_scores'] = self.object.score_set.order_by('score')
+        context['sorted_scores'] = self.object.score_set.order_by('-score')
         return context
 
     def render_to_response(self, context, **response_kwargs):
@@ -68,7 +68,7 @@ class EventView(LoginRequiredMixin, DetailView):
         self.object = self.get_object()
         creator = self.object.creator
         public = self.object.public
-        profiles = self.object.profiles
+        profiles = self.object.participants
 
         '''
         This checks for your own event, or if it's public, or if
@@ -80,3 +80,15 @@ class EventView(LoginRequiredMixin, DetailView):
                     return redirect("/profile/")
 
         return super(EventView, self).render_to_response(context, **response_kwargs)
+
+class UpdateEventView(LoginRequiredMixin, InlineFormSetView):
+    model = Event
+    inline_model = Score
+    template_name = 'events/update_event.html'
+    can_delete = False
+    fields = ('score',)
+    extra = 0
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return super(UpdateEventView, self).get_queryset().filter(pk=pk)

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="" method="post">{% csrf_token %}
+		{{ formset.management_form }}
+		{% for form in formset %}
+			<div>{{ form.instance.participant }}</div> {{ form }}
+		{% endfor %}
+		<input type='submit' value='Update Scores'>
+	</form>
+
+{% endblock content %}

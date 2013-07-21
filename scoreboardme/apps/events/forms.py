@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Event
+from .models import Event, Score
 
 
 class CreateEventForm(forms.ModelForm):
