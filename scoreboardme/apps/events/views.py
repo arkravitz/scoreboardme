@@ -100,8 +100,12 @@ class EventResponseView(LoginRequiredMixin, TemplateView):
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         current_user = request.user.profile
-        event_id = self.kwargs['pk']
-        event = Event.objects.get(pk=event_id)
+        try: 
+            event_id = int(self.kwargs['pk'])
+            event = Event.objects.get(pk=event_id)
+        except:
+            return redirect('/profile/')
+
 
         if event not in current_user.event_requests.all():
             return redirect('/profile/')
@@ -112,7 +116,7 @@ class EventResponseView(LoginRequiredMixin, TemplateView):
             
             EventRequest.objects.get(event=event, participant=current_user).delete()
 
-            return redirect('event', args=(event_id,))
+            return redirect('event', pk=event_id)
         elif '_reject' in request.POST:
             EventRequest.objects.get(event=event, participant=current_user).delete()
             return redirect('/profile/')
