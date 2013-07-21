@@ -29,7 +29,7 @@
                 <div class="event-requests-list-container">
                     <ul class="event-requests-list list">
                         {% for event in profile.event_requests.all %}
-                            <li class="event-request-li li"><a href="{{ event.get_absolute_url }}">{{ event.title }} - {{ event.creator }}</a></li>
+                            <li class="event-request-li li"><a href="{% url 'event_response' event.id %}">{{ event.title }} - {{ event.creator }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

@@ -1,5 +1,6 @@
-from django.views.generic import FormView, DetailView
+from django.views.generic import FormView, DetailView, TemplateView
 from django.contrib.auth import authenticate
+from django.shortcuts import redirect
 
 from braces.views import LoginRequiredMixin
 from extra_views import InlineFormSetView
@@ -12,7 +13,6 @@ from ..core.models import UserProfile
 class CreateEventView(LoginRequiredMixin, FormView):
     template_name = "events/create_event.html"
     form_class = CreateEventForm
-    login_url = "/login/"
 
     def get_selected_users(self):
         requested_users = self.request.POST.getlist("request_to")
@@ -32,7 +32,7 @@ class CreateEventView(LoginRequiredMixin, FormView):
         users_requested = self.get_selected_users()
         for user in users_requested:
             EventRequest.objects.create(
-                event_request=event, request_to=user, optional_message='')
+                event=event, participant=user, optional_message='')
 
         self.success_url = "/events/%d/" % event.id
 
@@ -69,14 +69,16 @@ class EventView(LoginRequiredMixin, DetailView):
         creator = self.object.creator
         public = self.object.public
         profiles = self.object.participants
+        requested_users = self.object.requested_users
 
         '''
         This checks for your own event, or if it's public, or if
         you're included in the event.
         '''
-        if not current_profile == creator \
+        if current_profile != creator \
             and not public \
-                and not current_profile in profiles:
+                and not current_profile in profiles \
+                    and not current_profile in requested_users:
                     return redirect("/profile/")
 
         return super(EventView, self).render_to_response(context, **response_kwargs)
@@ -92,3 +94,28 @@ class UpdateEventView(LoginRequiredMixin, InlineFormSetView):
     def get_queryset(self):
         pk = self.kwargs['pk']
         return super(UpdateEventView, self).get_queryset().filter(pk=pk)
+
+class EventResponseView(LoginRequiredMixin, TemplateView):
+    template_name = 'events/event_response.html'
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        current_user = request.user.profile
+        event_id = self.kwargs['pk']
+        event = Event.objects.get(pk=event_id)
+
+        if event not in current_user.event_requests.all():
+            return redirect('/profile/')
+
+        if '_accept' in request.POST:
+            # TODO, add to accepted, and remove from event requests
+            Score.objects.create(event=event, participant=current_user)
+            
+            EventRequest.objects.get(event=event, participant=current_user).delete()
+
+            return redirect('event', args=(event_id,))
+        elif '_reject' in request.POST:
+            EventRequest.objects.get(event=event, participant=current_user).delete()
+            return redirect('/profile/')
+
+        else:
+            return self.render_to_response(context)

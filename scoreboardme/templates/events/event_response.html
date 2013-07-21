@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<form action="" method="post">{% csrf_token %}
+		<input type="submit" value="Accept" name="_accept">
+    	<input type="submit" value="Reject" name="_reject">
+	</form>
+
+{% endblock content %}

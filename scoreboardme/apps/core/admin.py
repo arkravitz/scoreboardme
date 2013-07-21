@@ -21,7 +21,6 @@ class UserProfileAdmin(ForeignKeyAutocompleteAdmin):
     inlines = [
         EventsInline,
         EventRequestInline,
-        ScoreInline,
     ]
 
 class EventAdmin(admin.ModelAdmin):

@@ -19,18 +19,18 @@ class Event(models.Model):
 
 
 class EventRequest(models.Model):
-    event_request = models.ForeignKey(Event)
-    request_to = models.ForeignKey('core.UserProfile')
+    event = models.ForeignKey(Event)
+    participant = models.ForeignKey('core.UserProfile')
     optional_message = models.CharField(max_length=200, blank=True)
 
     def __unicode__(self):
-        return self.event_request.title
+        return self.event.title
 
 
 class Score(models.Model):
     event = models.ForeignKey('Event')
     participant = models.ForeignKey('core.UserProfile')
-    score = models.IntegerField()
+    score = models.IntegerField(default=0)
 
     def __unicode__(self):
         return u"%s %s score: %d" % (self.event.title, self.participant.user.username, self.score)
