@@ -16,7 +16,7 @@ class RedirectAuthenticatedMixin(object):
         if self.request.user.is_authenticated():
             return redirect(self.redirect_url)
 
-        return super(RedirectAuthenticated, self).render_to_response(context)
+        return super(RedirectAuthenticatedMixin, self).render_to_response(context)
 
 
 class IndexView(TemplateView):
