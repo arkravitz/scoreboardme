@@ -47,6 +47,7 @@ class CreateEventView(LoginRequiredMixin, FormView):
 
 
 class EventView(LoginRequiredMixin, DetailView):
+
     '''
     This is the view for rendering the event view page.
     It adds sorted scores to the context data, and makes sure
@@ -78,10 +79,11 @@ class EventView(LoginRequiredMixin, DetailView):
         if current_profile != creator \
             and not public \
                 and not current_profile in profiles \
-                    and not current_profile in requested_users:
+                and not current_profile in requested_users:
                     return redirect("/profile/")
 
         return super(EventView, self).render_to_response(context, **response_kwargs)
+
 
 class UpdateEventView(LoginRequiredMixin, InlineFormSetView):
     model = Event
@@ -95,30 +97,32 @@ class UpdateEventView(LoginRequiredMixin, InlineFormSetView):
         pk = self.kwargs['pk']
         return super(UpdateEventView, self).get_queryset().filter(pk=pk)
 
+
 class EventResponseView(LoginRequiredMixin, TemplateView):
     template_name = 'events/event_response.html'
+
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         current_user = request.user.profile
-        try: 
+        try:
             event_id = int(self.kwargs['pk'])
             event = Event.objects.get(pk=event_id)
         except:
             return redirect('/profile/')
 
-
         if event not in current_user.event_requests.all():
             return redirect('/profile/')
 
         if '_accept' in request.POST:
-            # TODO, add to accepted, and remove from event requests
             Score.objects.create(event=event, participant=current_user)
-            
-            EventRequest.objects.get(event=event, participant=current_user).delete()
+
+            EventRequest.objects.get(
+                event=event, participant=current_user).delete()
 
             return redirect('event', pk=event_id)
         elif '_reject' in request.POST:
-            EventRequest.objects.get(event=event, participant=current_user).delete()
+            EventRequest.objects.get(
+                event=event, participant=current_user).delete()
             return redirect('/profile/')
 
         else:

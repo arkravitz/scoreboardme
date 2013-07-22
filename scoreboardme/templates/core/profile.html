@@ -14,8 +14,14 @@
             <div class="event-content-container">
                 <h4 class="content-header event-header">events</h4>
                 <ul class="event-list list">
-                    {% for event in profile.events.all %}
-                    <li class="event-li li">{{ event.title }}</li>
+                    {% for event in active_events %}
+                    <li class="event-li li"><a href="/events/{{event.id}}" class="event-link">{{ event.title }}</a></li>
+                    {% endfor %}
+                </ul>
+                <h5 class="content-header">completed events</h5>
+                <ul class="ended-event-list list">
+                    {% for event in completed_events %}
+                    <li class="li"><a href="/events/{{event.id}}" class="event-link">{{ event.title }}</a></li>
                     {% endfor %}
                 </ul>
             </div>

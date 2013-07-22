@@ -19,9 +19,8 @@ class RedirectAuthenticatedMixin(object):
         return super(RedirectAuthenticatedMixin, self).render_to_response(context)
 
 
-class IndexView(TemplateView):
+class IndexView(RedirectAuthenticatedMixin, TemplateView):
     template_name = "core/index.html"
-
 
 class RegistrationView(RedirectAuthenticatedMixin, FormView):
     template_name = "registration/register.html"
@@ -42,6 +41,13 @@ class ProfileView(LoginRequiredMixin, DetailView):
     template_name = "core/profile.html"
     login_url = "/login/"
     context_object_name = "profile"
+
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['completed_events'] = self.request.user.profile.get_completed_events()
+        context['active_events'] = self.request.user.profile.get_active_events()
+        return context
+
 
     def get_object(self):
         return self.request.user.profile
