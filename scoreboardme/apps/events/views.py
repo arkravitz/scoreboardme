@@ -1,4 +1,4 @@
-from django.views.generic import FormView, DetailView, TemplateView
+from django.views.generic import FormView, DetailView, TemplateView, View
 from django.contrib.auth import authenticate
 from django.shortcuts import redirect
 
@@ -72,6 +72,9 @@ class EventView(LoginRequiredMixin, DetailView):
         profiles = self.object.participants
         requested_users = self.object.requested_users
 
+        if current_profile == creator:
+            return redirect('update_event', pk=self.object.id)
+
         '''
         This checks for your own event, or if it's public, or if
         you're included in the event.
@@ -127,3 +130,23 @@ class EventResponseView(LoginRequiredMixin, TemplateView):
 
         else:
             return self.render_to_response(context)
+
+class EndEventView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        print request.POST
+
+        try: 
+            event_id = self.kwargs['pk']
+            print event_id
+            event = Event.objects.get(pk=event_id)
+        except:
+            return redirect('profile')
+
+        if request.user.profile != event.creator:
+            return redirect('profile')
+
+        if 'end' in request.POST:
+            print 'Got here!'
+            event.ended = True
+            event.save()
+        return redirect('profile')

@@ -8,5 +8,5 @@ urlpatterns = patterns('',
     url(r'^(?P<pk>\d+)/$', views.EventView.as_view(), name='event'),
     url(r'^update_event/(?P<pk>\d+)/$', views.UpdateEventView.as_view(), name='update_event'),
     url(r'^event_response/(?P<pk>\d+)/$', views.EventResponseView.as_view(), name='event_response'),
-
+    url(r'end_event/(?P<pk>\d+)/$', views.EndEventView.as_view(), name='end_event'),
 )

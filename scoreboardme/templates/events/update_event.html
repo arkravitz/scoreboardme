@@ -6,7 +6,11 @@
 		{% for form in formset %}
 			<div>{{ form.instance.participant }}</div> {{ form }}
 		{% endfor %}
-		<input type='submit' value='Update Scores'>
+		<input type='submit' class='btn' value='Update Scores'>
 	</form>
+    
+    <form action="{% url 'end_event' event.id %}" method="post">{% csrf_token %}
+        <button class="end-event-button btn" name="end">end the event</button>
+    </form>
 
 {% endblock content %}
